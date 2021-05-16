@@ -61,7 +61,7 @@ void interpretCommand(char *command) {
 
 	if(!strcmp(data, "EXIT")) {
 		printf("Exited.\n");
-		running = false; //Handle thread termination
+		running = false;
 	}
 	else {
 		char magArr[2];
@@ -94,13 +94,10 @@ void interpretCommand(char *command) {
 void *moveInput(void *args) {
 	char temp[maxsize];
 	int ret;
-	// for(int i=0; i<5; i++) {
+
 	while(running) {
 		printf("Input command: \n");
 		fgets(temp, maxsize+1, stdin);
-		// read(0, temp, maxsize);
-		// printf("num of elements in temp is %d\n", strlen(temp)-1);
-		// printf("you entered: %s\n", temp);
 
 		char prefix[3];
 		for(int i=0; i<COMMAND_PREFIX_LENGTH; i++) {
@@ -118,23 +115,19 @@ void *moveInput(void *args) {
 		}
 		printf("current buffer: %s\n", buffer);
 	}
-	printf("thread 1 exited\n");
 	pthread_exit(NULL);
 }
 
 void *moveOutput(void *args) {
 	char command[8];
-	// for(int i=0; i<20; i++) {
 	while(running) {
 		sleep(interval);
 		if(elements >= COMMAND_LENGTH) {
 			removeData(command, COMMAND_LENGTH);
 			command[COMMAND_LENGTH]='\0';
 			interpretCommand(command);
-			// printf("my command: %s\n", command);
 		}
 	}
-	printf("thread 2 exited\n");
 	pthread_exit(NULL);
 }
 
