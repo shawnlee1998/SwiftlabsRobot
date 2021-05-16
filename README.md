@@ -5,9 +5,7 @@
 
 ## Build Command
 ```
-gcc -o robot.exe robot.c
-
-gcc -o robot robot.c
+gcc robot.c -o robot
 ```
 
 ## Current Issues
